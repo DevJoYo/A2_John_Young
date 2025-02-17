@@ -18,6 +18,8 @@
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgi-EhtvBxoBDtLFyiMKWf_phLoCp457M&loading=async&callback=initMap&libraries=marker">
         </script>
 
+        <script src="scripts/stores.js"></script>
+
         <h1>Welcome to the Kennel Finder</h1>
 
         <div class="row">
@@ -37,35 +39,40 @@
             function initMap(){
                 map = new google.maps.Map(document.getElementById('map'), {
                     center: {lat: 43.2387, lng: -79.8881},
-                    zoom: 13
+                    zoom: 13,
+                    mapId: '999179c50e1af565'
                 });
 
                 //geo coder object
                 geocoder = new google.maps.Geocoder();
-            }
 
-            function findLocation()
-            {
                 for (i = 0; i < stores.length; i++)
                 {
-                    geocoder.geocode(stores[i].ADDRESS, function(results, status) {
-                    if (status == 'OK') {
-                    
-                    // we could center the map at the location
-                    // map.setCenter(results[0].geometry.location);
-                    
-                    // put the latitude and longitude on the page as text
-    
-                    
-                    // put a marker on the map at the given position
-                    var marker = new google.maps.marker.AdvancedMarkerElement({
-                        map: map,
-                        position: results[0].geometry.location
+                    let address = stores[i].BUSINESS_ADDRESS;
+                    console.log(address);
+                    geocoder.geocode({'address': address}, function(results, status) {
+                        if (status == 'OK') {
+                            console.log(results[0].geometry.location);
+                        // we could center the map at the location
+                        // map.setCenter(results[0].geometry.location);
+                        
+                        // put the latitude and longitude on the page as text
+        
+                        
+                        // put a marker on the map at the given position
+                        var marker = new google.maps.marker.AdvancedMarkerElement({
+                            map: map,
+                            position: results[0].geometry.location,
+                            
+                            title: "kennel"
+                            //content: icon_content
+                        });
+                        } else {
+                        alert('Geocode was not successful for the following reason: ' + status);
+                        }
                     });
-                    } else {
-                    alert('Geocode was not successful for the following reason: ' + status);
-                    }
-                });
+
+                    
                 }
             }
 
