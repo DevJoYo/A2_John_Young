@@ -6,7 +6,7 @@ const stores = [
         "BUSINESS_NAME": "THE URBAN ZOO",
         "BUSINESS_ADDRESS": "540 CONCESSION ST, HAMILTON, ON",
         "COMMUNITY": "Hamilton",
-        "CATEGORY": "Pet Shop"
+        "CATEGORY": "PetShop"
     },
     {
         "OBJECTID": 2,
@@ -286,5 +286,5 @@ const stores = [
         "BUSINESS_ADDRESS": "231 11TH CON RD E, FLAMBOROUGH, ON",
         "COMMUNITY": "Flamborough",
         "CATEGORY": "Kennel"
-      },
+      }
 ]

@@ -55,8 +55,10 @@
         <div id="kennel"></div> -->
         <script>
             let map, geocoder;
-            let markers = [];
            
+            let markerArray = []; 
+
+
             document.getElementById("kennelButton").addEventListener("click", filterKennel);
             document.getElementById("petShopButton").addEventListener("click", filterPetShop);
             document.getElementById("allCatButton").addEventListener("click", showAll);
@@ -88,7 +90,8 @@
 
             function popualteMarkers()
             {
-                markers = [];
+                
+
                 for (i = 0; i < stores.length; i++)
                 {
                     let address = stores[i].BUSINESS_ADDRESS;
@@ -112,9 +115,11 @@
                         marker.CATEGORY = category;
                         marker.COMMUNITY = community;
                         marker.LICENSE = license;  
+                        marker.LAT = results[0].geometry.location.lat();
+                        marker.LNG = results[0].geometry.location.lng();
                         
                         marker.addListener('click', marker_clicked);
-                        markers.push(marker);
+                        markerArray.push(marker);
                     });
                 }
 
@@ -139,101 +144,116 @@
 
             function filterKennel()
             {
-                popualteMarkers();
-
-                for (i = 0; i < markers.length; i++)
+                for (i = 0; i < markerArray.length; i++)
                 {
-                    if (markers[i].CATEGORY != "Kennel")
+                    if (markerArray[i].CATEGORY != "Kennel")
                     {
-                        markers[i].position = null;
+                        markerArray[i].position = null;
+                    }
+                    else
+                    {
+                        markerArray[i].position = {lat: markerArray[i].LAT, lng: markerArray[i].LNG};
                     }
                 }
             }
 
             function filterPetShop()
             {
-                popualteMarkers();
-
-                for (i = 0; i < markers.length; i++)
+                for (i = 0; i < markerArray.length; i++)
                 {
-                    if (markers[i].CATEGORY != "PetShop")
+                    if (markerArray[i].CATEGORY != "PetShop")
                     {
-                        markers[i].position = null;
+                        markerArray[i].position = null;
+                    }
+                    else
+                    {
+                        markerArray[i].position = {lat: markerArray[i].LAT, lng: markerArray[i].LNG};
                     }
                 }
             }
 
             function filterHamilton()
             {
-                popualteMarkers();
-
-                for (i = 0; i < markers.length; i++)
+                for (i = 0; i < markerArray.length; i++)
                 {
-                    if (markers[i].COMMUNITY != "Hamilton")
+                    if (markerArray[i].COMMUNITY != "Hamilton")
                     {
-                        markers[i].position = null;
+                        markerArray[i].position = null;
+                    }
+                    else
+                    {
+                        markerArray[i].position = {lat: markerArray[i].LAT, lng: markerArray[i].LNG};
                     }
                 }
             }
 
             function filterFlamborough()
             {
-                popualteMarkers();
-
-                for (i = 0; i < markers.length; i++)
+                for (i = 0; i < markerArray.length; i++)
                 {
-                    if (markers[i].COMMUNITY != "Flamborough")
+                    if (markerArray[i].COMMUNITY != "Flamborough")
                     {
-                        markers[i].position = null;
+                        markerArray[i].position = null;
+                    }
+                    else
+                    {
+                        markerArray[i].position = {lat: markerArray[i].LAT, lng: markerArray[i].LNG};
                     }
                 }
             }
 
             function fitlerAncaster()
             {
-                popualteMarkers();
-
-                for (i = 0; i < markers.length; i++)
+                for (i = 0; i < markerArray.length; i++)
                 {
-                    if (markers[i].COMMUNITY != "Ancaster")
+                    if (markerArray[i].COMMUNITY != "Ancaster")
                     {
-                        markers[i].position = null;
+                        markerArray[i].position = null;
+                    }
+                    else
+                    {
+                        markerArray[i].position = {lat: markerArray[i].LAT, lng: markerArray[i].LNG};
                     }
                 }
             }
 
             function filterStoneyCreek()
             {
-                popualteMarkers();
-
-                for (i = 0; i < markers.length; i++)
+                for (i = 0; i < markerArray.length; i++)
                 {
-                    if (markers[i].COMMUNITY != "StoneyCreek")
+                    if (markerArray[i].COMMUNITY != "StoneyCreek")
                     {
-                        markers[i].position = null;
+                        markerArray[i].position = null;
+                    }
+                    else
+                    {
+                        markerArray[i].position = {lat: markerArray[i].LAT, lng: markerArray[i].LNG};
                     }
                 }
             }
 
             function filterGlanbrook()
             {
-                popualteMarkers();
-
-                for (i = 0; i < markers.length; i++)
+                for (i = 0; i < markerArray.length; i++)
                 {
-                    if (markers[i].COMMUNITY != "Glanbrook")
+                    if (markerArray[i].COMMUNITY != "Glanbrook")
                     {
-                        markers[i].position = null;
+                        markerArray[i].position = null;
+                    }
+                    else
+                    {
+                        markerArray[i].position = {lat: markerArray[i].LAT, lng: markerArray[i].LNG};
                     }
                 }
             }
 
             function showAll()
             {
-                popualteMarkers();
+                for (i = 0; i < markerArray.length; i++)
+                {
+                    markerArray[i].position = {lat: markerArray[i].LAT, lng: markerArray[i].LNG};
+                }
             }
-
-        
 
 
 
