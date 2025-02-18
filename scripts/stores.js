@@ -86,7 +86,7 @@ const stores = [
         "LICENSE_TYPE": "Kennels and Pet Shops",
         "BUSINESS_NAME": "DOGS REFORMED INC.",
         "BUSINESS_ADDRESS": "1156 HIGHLAND RD E, STONEY CREEK, ON",
-        "COMMUNITY": "Stoney Creek",
+        "COMMUNITY": "StoneyCreek",
         "CATEGORY": "Kennel"
       },
       {
@@ -131,7 +131,7 @@ const stores = [
         "LICENSE_TYPE": "Kennels and Pet Shops",
         "BUSINESS_NAME": "JILMARPET KENNELS",
         "BUSINESS_ADDRESS": "55 EIGHTH RD E, STONEY CREEK, ON",
-        "COMMUNITY": "Stoney Creek",
+        "COMMUNITY": "StoneyCreek",
         "CATEGORY": "Kennel"
       },
       {
@@ -176,7 +176,7 @@ const stores = [
         "LICENSE_TYPE": "Kennels and Pet Shops",
         "BUSINESS_NAME": "NITELATCHES SHETLAND SHEEPDOGS",
         "BUSINESS_ADDRESS": "589 EIGHTH RD E, STONEY CREEK, ON",
-        "COMMUNITY": "Stoney Creek",
+        "COMMUNITY": "StoneyCreek",
         "CATEGORY": "PetShop"
       },
       {
@@ -194,7 +194,7 @@ const stores = [
         "LICENSE_TYPE": "Kennels and Pet Shops",
         "BUSINESS_NAME": "PETSMART CANADA INC.",
         "BUSINESS_ADDRESS": "21779 STONE CHURCH RD E 2, STONEY CREEK, ON",
-        "COMMUNITY": "Stoney Creek",
+        "COMMUNITY": "StoneyCreek",
         "CATEGORY": "PetShop"
       },
       {

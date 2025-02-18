@@ -58,6 +58,14 @@
             let markers = [];
            
             document.getElementById("kennelButton").addEventListener("click", filterKennel);
+            document.getElementById("petShopButton").addEventListener("click", filterPetShop);
+            document.getElementById("allCatButton").addEventListener("click", showAll);
+            document.getElementById("hamButton").addEventListener("click", filterHamilton);
+            document.getElementById("flamButton").addEventListener("click", filterFlamborough);
+            document.getElementById("ancButton").addEventListener("click", fitlerAncaster);
+            document.getElementById("scButton").addEventListener("click", filterStoneyCreek);
+            document.getElementById("glanButton").addEventListener("click", filterGlanbrook);
+            document.getElementById("allLocButton").addEventListener("click", showAll);
 
             function initMap()
             {
@@ -131,32 +139,101 @@
 
             function filterKennel()
             {
+                popualteMarkers();
+
                 for (i = 0; i < markers.length; i++)
                 {
                     if (markers[i].CATEGORY != "Kennel")
-                {
-                    markers[i].position = null;
-                }
-                    
-                    
+                    {
+                        markers[i].position = null;
+                    }
                 }
             }
 
+            function filterPetShop()
+            {
+                popualteMarkers();
 
-            function marker_clicked()
+                for (i = 0; i < markers.length; i++)
                 {
-                    let contentString = 
-                            "<h5>" + this.NAME + "</h5>" +
-                            "<p>Category: " + this.CATEGORY + "</p>" +
-                            "<br>" +
-                            "<p>Address: " + this.ADDRESS + "</p>" +
-                            "<p>License Number: " + this.LICENSE + "</p>";
-                                
-
-                    infoWindow.close(); // Close previously opened infowindow
-                    infoWindow.setContent(contentString);
-                    infoWindow.open(map, this);
+                    if (markers[i].CATEGORY != "PetShop")
+                    {
+                        markers[i].position = null;
+                    }
                 }
+            }
+
+            function filterHamilton()
+            {
+                popualteMarkers();
+
+                for (i = 0; i < markers.length; i++)
+                {
+                    if (markers[i].COMMUNITY != "Hamilton")
+                    {
+                        markers[i].position = null;
+                    }
+                }
+            }
+
+            function filterFlamborough()
+            {
+                popualteMarkers();
+
+                for (i = 0; i < markers.length; i++)
+                {
+                    if (markers[i].COMMUNITY != "Flamborough")
+                    {
+                        markers[i].position = null;
+                    }
+                }
+            }
+
+            function fitlerAncaster()
+            {
+                popualteMarkers();
+
+                for (i = 0; i < markers.length; i++)
+                {
+                    if (markers[i].COMMUNITY != "Ancaster")
+                    {
+                        markers[i].position = null;
+                    }
+                }
+            }
+
+            function filterStoneyCreek()
+            {
+                popualteMarkers();
+
+                for (i = 0; i < markers.length; i++)
+                {
+                    if (markers[i].COMMUNITY != "StoneyCreek")
+                    {
+                        markers[i].position = null;
+                    }
+                }
+            }
+
+            function filterGlanbrook()
+            {
+                popualteMarkers();
+
+                for (i = 0; i < markers.length; i++)
+                {
+                    if (markers[i].COMMUNITY != "Glanbrook")
+                    {
+                        markers[i].position = null;
+                    }
+                }
+            }
+
+            function showAll()
+            {
+                popualteMarkers();
+            }
+
+        
 
 
 
