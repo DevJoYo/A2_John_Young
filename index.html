@@ -228,12 +228,13 @@
                     if (status == 'OK') {
                         locAddress = results[0].formatted_address;
                         console.log(locAddress);
+                        populateDropdowns("Your Location", locAddress);
                     } else {
                         alert('Geocode was not successful for ' + latlng + ', for the following reason: ' + status);
                     }
                 });
-
-                populateDropdowns("Your Location", locAddress);
+                
+                
             }
 
             function filterKennel()
@@ -412,7 +413,7 @@
                 let sOption = document.createElement("option");
                 let eOption = document.createElement("option");
                 sOption.textContent = name;
-                sOption.value = address
+                sOption.value = address;
                 eOption.textContent = name;
                 eOption.value = address;
                 startDropdown.appendChild(sOption);
