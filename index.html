@@ -53,12 +53,12 @@
             <div class="col-4">
                 <div class ="row bg-primary border border-primary border-3">
                     <h5 class="text-center">Add Location</h5>
-                    <form action="" method="get">
+                    <form>
                         <label for="bName">Buisness Name:</label>
                         <input type="text" id="bName" name="bName" required>
                         <br>
                         <label for="bAddress">Address:</label>
-                        <input type="text" id="address" name="address" required>
+                        <input type="text" id="bAddress" name="address" required>
                         <br>
                         <label for="bCategory">Category:</label>
                         <select id="bCategory" name="bCategory" required>
@@ -75,10 +75,10 @@
                             <option value="Glanbrook">Glanbrook</option>
                         </select>
                         <br>
-                        <label for="bLicense">(Optional)License Number:</label>
+                        <label for="bLicense">(Optional) License Number:</label>
                         <input type="text" id="bLicense" name="bLicense">
-
-                        <button type="submit">Add Location</button>
+                        <br>
+                        <button type="button" id="addLocButton">Add Location</button>
                     </form>
                 </div>
             </div>
@@ -106,6 +106,8 @@
             {
                 navigator.geolocation.getCurrentPosition(locateUser);
             });
+
+            document.getElementById("addLocButton").addEventListener("click", addLocation);
 
             function initMap()
             {
@@ -303,8 +305,59 @@
                 }
             }
 
+            function addLocation()
+            {
+                let bName = document.getElementById("bName").value;
+                let bAddress = document.getElementById("bAddress").value;
+                let bCategory = document.getElementById("bCategory").value;
+                let bCommunity = document.getElementById("bCommunity").value;
+                console.log(document.getElementById("bLicense").value);
+                let bLicense = document.getElementById("bLicense").value;
 
+                const user_icon_content = document.createElement("img");
+                user_icon_content.src = "https://maps.google.com/mapfiles/kml/paddle/purple-diamond.png";
 
+                geocoder.geocode({'address': bAddress}, function(results, status) {
+                        if (status == 'OK') {
+                            var marker = new google.maps.marker.AdvancedMarkerElement({
+                                map: map,
+                                position: results[0].geometry.location,
+                                title: bName,
+                                content: user_icon_content
+                            });
+                        } else {
+                            alert('Geocode was not successful for ' + address + ', for the following reason: ' + status);
+                        }
+                        marker.NAME = bName;
+                        marker.ADDRESS = bAddress;
+                        marker.CATEGORY = bCategory;
+                        marker.COMMUNITY = bCommunity;
+                        marker.LICENSE = bLicense;  
+                        marker.LAT = results[0].geometry.location.lat();
+                        marker.LNG = results[0].geometry.location.lng();
+                        
+                        marker.addListener('click', marker_clicked);
+                        markerArray.push(marker);
+                    });
+                    
+                    let infoWindow = new google.maps.InfoWindow();
+
+                let marker_clicked = function() 
+                {
+                    let contentString = 
+                            "<h5>" + this.NAME + "</h5>" +
+                            "<p>Category: " + this.CATEGORY + "</p>" +
+                            "<br>" +
+                            "<p>Address: " + this.ADDRESS + "</p>" +
+                            "<p>License Number: " + this.LICENSE + "</p>";
+                                
+
+                    infoWindow.close(); // Close previously opened infowindow
+                    infoWindow.setContent(contentString);
+                    infoWindow.open(map, this);
+                };
+                
+            }
 
         </script>
     </body>
