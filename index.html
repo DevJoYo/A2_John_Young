@@ -20,24 +20,24 @@
 
         <script src="scripts/stores.js"></script>
 
-        <h1 class="text-center fst-italic m-5 border border-primary border-5">Welcome to the Kennel Finder</h1>
+        <h1 class="text-center fst-italic mx-5 mt-1 border border-primary border-5">Welcome to the Kennel Finder</h1>
 
-        <div class="m-2 text-center row">
-            <div class="col-4">
-                <h3>Sort by category</h3>
-                <button id="allCatButton">All</button>
-                <button id="kennelButton">Kennels</button>
-                <button id="petShopButton">Pet Shops</button>
+        <div class="m-2 text-center row border border-primary border-3">
+            <div class="col-4 my-2">
+                <h5 class="float-start mx-1">Sort by Category</h5>
+                <button id="allCatButton" class="float-start mx-2">All</button>
+                <button id="kennelButton" class="float-start mx-2">Kennels</button>
+                <button id="petShopButton" class="float-start mx-2">Pet Shops</button>
             </div>
 
-            <div class="col-8">
-                <h3>Sort by location</h3>
-                <button id="allLocButton">All</button>
-                <button id="hamButton">Hamilton</button>
-                <button id="flamButton">Flamborough</button>
-                <button id="ancButton">Ancaster</button>
-                <button id="scButton">Stoney Creek</button>
-                <button id="glanButton">Glanbrook</button>
+            <div class="col-8 my-2">
+                <h5 class="float-start mx-1">Sort by Location</h5>
+                <button id="allLocButton" class="float-start mx-2">All</button>
+                <button id="hamButton" class="float-start mx-2">Hamilton</button>
+                <button id="flamButton" class="float-start mx-2">Flamborough</button>
+                <button id="ancButton" class="float-start mx-2">Ancaster</button>
+                <button id="scButton" class="float-start mx-2">Stoney Creek</button>
+                <button id="glanButton" class="float-start mx-2">Glanbrook</button>
             </div>
             
         </div>
@@ -56,6 +56,8 @@
         <script>
             let map, geocoder;
             let markers = [];
+           
+            document.getElementById("kennelButton").addEventListener("click", filterKennel);
 
             function initMap()
             {
@@ -64,56 +66,54 @@
                     zoom: 10,
                     mapId: '999179c50e1af565'
                 });
-
-                //geo coder object
+                
                 geocoder = new google.maps.Geocoder();
-                let infoWindow = new google.maps.InfoWindow();
+                
 
+                /*
+                
+                */
+                popualteMarkers();    
+                
+                
+            }
+
+            function popualteMarkers()
+            {
+                markers = [];
                 for (i = 0; i < stores.length; i++)
                 {
                     let address = stores[i].BUSINESS_ADDRESS;
                     let name = stores[i].BUSINESS_NAME;
                     let category = stores[i].CATEGORY;
-                    let license = stores[i].LICENSE_NUMBER;
-
-                    
-                    //console.log(address);
+                    let community = stores[i].COMMUNITY;
+                    let license = stores[i].LICENSE_NUMBER; 
 
                     geocoder.geocode({'address': address}, function(results, status) {
                         if (status == 'OK') {
-                            //console.log(results[0].geometry.location);
-                        // we could center the map at the location
-                        // map.setCenter(results[0].geometry.location);
-                        
-                        // put the latitude and longitude on the page as text
-        
-                        
-                        // put a marker on the map at the given position
-                        var marker = new google.maps.marker.AdvancedMarkerElement({
-                            map: map,
-                            position: results[0].geometry.location,
-                            title: name,
-
-                            //content: contentString
-                        });
+                            var marker = new google.maps.marker.AdvancedMarkerElement({
+                                map: map,
+                                position: results[0].geometry.location,
+                                title: name
+                            });
                         } else {
-                        alert('Geocode was not successful for ' + address + ', for the following reason: ' + status);
+                            alert('Geocode was not successful for ' + address + ', for the following reason: ' + status);
                         }
-
                         marker.NAME = name;
                         marker.ADDRESS = address;
                         marker.CATEGORY = category;
-                        marker.LICENSE = license;   
+                        marker.COMMUNITY = community;
+                        marker.LICENSE = license;  
+                        
                         marker.addListener('click', marker_clicked);
-
                         markers.push(marker);
-
                     });
-
-                    
                 }
 
-                let marker_clicked = function() {
+                let infoWindow = new google.maps.InfoWindow();
+
+                let marker_clicked = function() 
+                {
                     let contentString = 
                             "<h5>" + this.NAME + "</h5>" +
                             "<p>Category: " + this.CATEGORY + "</p>" +
@@ -127,6 +127,37 @@
                     infoWindow.open(map, this);
                 };
             }
+           
+
+            function filterKennel()
+            {
+                for (i = 0; i < markers.length; i++)
+                {
+                    if (markers[i].CATEGORY != "Kennel")
+                {
+                    markers[i].position = null;
+                }
+                    
+                    
+                }
+            }
+
+
+            function marker_clicked()
+                {
+                    let contentString = 
+                            "<h5>" + this.NAME + "</h5>" +
+                            "<p>Category: " + this.CATEGORY + "</p>" +
+                            "<br>" +
+                            "<p>Address: " + this.ADDRESS + "</p>" +
+                            "<p>License Number: " + this.LICENSE + "</p>";
+                                
+
+                    infoWindow.close(); // Close previously opened infowindow
+                    infoWindow.setContent(contentString);
+                    infoWindow.open(map, this);
+                }
+
 
 
 
