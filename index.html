@@ -62,7 +62,7 @@
            
             let markerArray = []; 
 
-
+            // Event Listeners
             document.getElementById("kennelButton").addEventListener("click", filterKennel);
             document.getElementById("petShopButton").addEventListener("click", filterPetShop);
             document.getElementById("allCatButton").addEventListener("click", showAll);
@@ -72,6 +72,11 @@
             document.getElementById("scButton").addEventListener("click", filterStoneyCreek);
             document.getElementById("glanButton").addEventListener("click", filterGlanbrook);
             document.getElementById("allLocButton").addEventListener("click", showAll);
+            document.getElementById("findMeButton").addEventListener("click", 
+            function()
+            {
+                navigator.geolocation.getCurrentPosition(locateUser);
+            });
 
             function initMap()
             {
@@ -82,14 +87,9 @@
                 });
                 
                 geocoder = new google.maps.Geocoder();
-                
 
-                /*
-                
-                */
                 popualteMarkers();    
-                
-                
+    
             }
 
             function popualteMarkers()
@@ -145,6 +145,21 @@
                 };
             }
            
+            function locateUser(position)
+            {
+                const icon_content = document.createElement("img");
+                icon_content.src = "https://maps.google.com/mapfiles/kml/paddle/grn-stars.png";
+
+                // create a marker centered at the user's location
+                let user_location = new google.maps.marker.AdvancedMarkerElement({
+                    map: map,
+                    position: { lat: position.coords.latitude, 
+                                lng: position.coords.longitude
+                            },
+                    title: "Your Location",  // will appear when we hover over the marker
+                    content: icon_content
+                });
+            }
 
             function filterKennel()
             {
