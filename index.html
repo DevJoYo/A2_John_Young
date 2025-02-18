@@ -101,6 +101,10 @@
                     <br>
                     <button type="button" id="getDirections">Get Directions</button>
                 </div>
+                <div class="row">
+                    <h5 id="directionsTitle"> </h5>
+                    <p id="directions"> </p>
+                </div>
             </div>
         </div>
         <!--<p>Click the button below to find a kennel near you.</p>
@@ -217,6 +221,19 @@
                     title: "Your Location",  // will appear when we hover over the marker
                     content: icon_content
                 });
+
+                let latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                let locAddress;
+                geocoder.geocode({'location': latlng}, function(results, status) {
+                    if (status == 'OK') {
+                        locAddress = results[0].formatted_address;
+                        console.log(locAddress);
+                    } else {
+                        alert('Geocode was not successful for ' + latlng + ', for the following reason: ' + status);
+                    }
+                });
+
+                populateDropdowns("Your Location", locAddress);
             }
 
             function filterKennel()
@@ -366,6 +383,7 @@
                         
                         marker.addListener('click', marker_clicked);
                         markerArray.push(marker);
+                        populateDropdowns(bName, bAddress);
                     });
                     
                     let infoWindow = new google.maps.InfoWindow();
@@ -427,11 +445,30 @@
                 directionsService.route(request, function(result, status) {
                     if (status == 'OK') {
                     directionsRenderer.setDirections(result);
+                    displayDirections(result)
                     console.log(result);
                     }
                 });
 
     
+            }
+
+            function displayDirections(response)
+            {
+                let directionsTit = document.getElementById("directionsTitle");
+                let directionsText = document.getElementById("directions");
+                let instructions = "";
+
+                directionsTit.textContent = "Directions from " +  response.routes[0].legs[0].start_address + "to " + response.routes[0].legs[0].end_address;
+                let legs = response.routes[0].legs;
+                legs.forEach(leg => {
+                    // Loop through each step of the route
+                    leg.steps.forEach(step => {
+                    instructions += `<p>${step.instructions}</p>`;
+                    });
+                });
+
+                directionsText.innerHTML = instructions;
             }
 
         </script>
