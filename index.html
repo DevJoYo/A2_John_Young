@@ -34,8 +34,6 @@
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgi-EhtvBxoBDtLFyiMKWf_phLoCp457M&loading=async&callback=initMap&libraries=marker">
     </script>
 
-    
-
     <h1 class="text-center fst-italic mx-5 mt-1 p-3 bg-primary border border-light border-5 text-light">
         Hamilton PetShop / Kennel Locator
     </h1>
@@ -66,11 +64,11 @@
 
     <div class="row container-fluid mt-3 m-auto">
         <div id="map" class="border border-light border-3 col-lg-8 mb-2 ">
-                //map will be displayed here
+                <!--map will be displayed here-->
         </div>
 
         <div class="col-lg-4 mb-2 bg-primary border border-light border-3 text-light mx-auto">
-            <div class="row"> //first form row
+            <div class="row">
                 <h4 class="text-center text-decoration-underline">Add Location</h4>
                 <form>
                     <div class="input-group mb-3">
@@ -128,13 +126,13 @@
             </div>
 
             <div class="row my-2">
-                <h4 class="text-center text-decoration-underline">Get Directions</h4>
+                <h4 class="text-center text-decoration-underline">Directions</h4>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <label class="input-group-text rounded-0" for="startDropdown">Start Location</label>
                     </div>
 
-                    <select class="custom-select" id="startDropdown">
+                    <select class="custom-select" id="startDropdown" style="max-width: 80%;">
                         <option value="" disabled selected>Choose Start Location</option>
                     </select>
                 </div>
@@ -144,7 +142,7 @@
                         <label class="input-group-text rounded-0" for="endDropdown">End Location</label>
                     </div>
 
-                    <select class="custom-select" id="endDropdown">
+                    <select class="custom-select" id="endDropdown" style="max-width: 80%;">
                         <option value="" disabled selected>Choose End Location</option>
                     </select>
                 </div>
