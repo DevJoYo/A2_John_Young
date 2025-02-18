@@ -274,7 +274,7 @@ const stores = [
         "LICENSE_NUMBER": "15 175555 09 1L",
         "LICENSE_TYPE": "Kennels and Pet Shops",
         "BUSINESS_NAME": "WINDRUN FARM",
-        "BUSINESS_ADDRESS": "1279 4TH CON RD W, FLAMBOROUGH, ON",
+        "BUSINESS_ADDRESS": "1279 CONCESSION RD 4 W, FLAMBOROUGH, ON",
         "COMMUNITY": "Flamborough",
         "CATEGORY": "Kennel"
       },

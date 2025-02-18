@@ -54,57 +54,95 @@
             </div>
             <div class="col-lg-4 mb-2 bg-primary border border-light border-3 text-light mx-auto">
                 <div class ="row">
-                    <h5 class="text-center ">Add Location</h5>
+                    <h4 class="text-center text-decoration-underline">Add Location</h4>
                     <form>
-                        <label for="bName">Buisness Name:</label>
-                        <input type="text" id="bName" name="bName" required>
-                        <br>
-                        <label for="bAddress">Address:</label>
-                        <input type="text" id="bAddress" name="address" required>
-                        <br>
-                        <label for="bCategory">Category:</label>
-                        <select id="bCategory" name="bCategory" required>
-                            <option value="Kennel">Kennel</option>
-                            <option value="PetShop">Pet Shop</option>
-                        </select>
-                        <br>
-                        <label for="bCommunity">Community:</label>
-                        <select id="bCommunity" name="bCommunity" required>
-                            <option value="Hamilton">Hamilton</option>
-                            <option value="Flamborough">Flamborough</option>
-                            <option value="Ancaster">Ancaster</option>
-                            <option value="StoneyCreek">Stoney Creek</option>
-                            <option value="Glanbrook">Glanbrook</option>
-                        </select>
-                        <br>
-                        <label for="bLicense">(Optional) License Number:</label>
-                        <input type="text" id="bLicense" name="bLicense">
-                        <br>
-                        <button type="button" id="addLocButton">Add Location</button>
-                        <button type="button" id="findMeButton" class="">Find Me</button>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text rounded-0" id="bNameLabel">Buisness Name:</span>
+                            </div>
+                            <input type="text" class="form-control" id="bName" placeholder="" aria-label="" aria-describedby="bNameLabel" required>
+                        </div>
+                        
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text rounded-0" id="bAddressLabel">Address:</span>
+                            </div>
+                            <input type="text" class="form-control" id="bAddress" placeholder="" aria-label="" aria-describedby="bNameLabel" required>
+                        </div>
+                        
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <label class="input-group-text rounded-0" for="bCategory">Category</label>
+                            </div>
+                            <select class="custom-select" id="bCategory">
+                                <option value="Kennel">Kennel</option>
+                                <option value="PetShop">Pet Shop</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <label class="input-group-text rounded-0" for="bCommunity">Category</label>
+                            </div>
+                            <select class="custom-select" id="bCommunity">
+                                <option value="Hamilton">Hamilton</option>
+                                <option value="Flamborough">Flamborough</option>
+                                <option value="Ancaster">Ancaster</option>
+                                <option value="StoneyCreek">Stoney Creek</option>
+                                <option value="Glanbrook">Glanbrook</option>
+                            </select>
+                        </div>
+                       
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text rounded-0" id="bLicense">License # (optional):</span>
+                            </div>
+                            <input type="text" class="form-control" id="bLicense" placeholder="" aria-label="" aria-describedby="bLicense">
+                        </div>
+                        <div class="text-center m-auto">
+                            <button type="button" id="addLocButton" class="btn btn-light">Add Location</button>
+                            <button type="button" id="findMeButton" class="btn btn-light">Find my Location</button>
+                        </div>
+                        
                     </form>
                 </div>
 
                 <div class="row my-2">
-                    <h5>Get Directions</h5>
-                    <select id="startDropdown">
-                        <option value="" disabled selected>Choose Start Location</option>
-                    </select>
-                    <br>
-                    <select id="endDropdown">
-                        <option value="" disabled selected>Choose End Location</option>
-                    </select>
-                    <br>
-                    <select id="travelMethod">
-                        <option value="DRIVING">Driving</option>
-                        <option value="WALKING">Walking</option>
-                        <option value="BICYCLING">Bicycling</option>
-                        <option value="TRANSIT">Transit</option>
-                    </select>
-                    <br>
-                    <button type="button" id="getDirections">Get Directions</button>
+                    <h4 class="text-center text-decoration-underline">Get Directions</h4>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <label class="input-group-text rounded-0" for="startDropdown">Start Location</label>
+                        </div>
+                        <select class="custom-select" id="startDropdown">
+                            <option value="" disabled selected>Choose Start Location</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <label class="input-group-text rounded-0" for="endDropdown">End Location</label>
+                        </div>
+                        <select class="custom-select" id="endDropdown">
+                            <option value="" disabled selected>Choose End Location</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <label class="input-group-text rounded-0" for="travelMethod">Travel Method</label>
+                        </div>
+                        <select class="custom-select" id="travelMethod">
+                            <option value="DRIVING">Driving</option>
+                            <option value="WALKING">Walking</option>
+                            <option value="BICYCLING">Bicycling</option>
+                            <option value="TRANSIT">Transit</option>
+                        </select>
+                    </div>
+                    <div class="text-center m-auto">
+                        <button type="button" id="getDirections" class="btn btn-light">Get Directions</button>
+                    </div>
                 </div>
-                <div class="row my-2">
+                <div class="row my-2 border border-light border-3 m-2">
                     <h5 id="directionsTitle"> </h5>
                     <p id="directions"> </p>
                 </div>
@@ -144,8 +182,14 @@
                 });
                 
                 geocoder = new google.maps.Geocoder();
+                directionsService = new google.maps.DirectionsService();
+                directionsRenderer = new google.maps.DirectionsRenderer();
+                
+                // have the directions renderer work with this map
+                directionsRenderer.setMap(map);
 
                 popualteMarkers();    
+
             
             }
 
@@ -425,11 +469,8 @@
             function getDirections()
             {
                             // services used to provide directions
-                directionsService = new google.maps.DirectionsService();
-                directionsRenderer = new google.maps.DirectionsRenderer();
                 
-                // have the directions renderer work with this map
-                directionsRenderer.setMap(map);
+                directionsRenderer.setMap(null);
                 
                 // setup a basic directions request with origin, destination, travel mode,
                 // there are MANY more possible options here
@@ -449,6 +490,7 @@
                     directionsService.route(request, function(result, status) {
                         if (status == 'OK') {
                         directionsRenderer.setDirections(result);
+                        directionsRenderer.setMap(map);
                         displayDirections(result)
                         console.log(result);
                         }
