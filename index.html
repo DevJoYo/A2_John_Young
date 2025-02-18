@@ -84,9 +84,13 @@
 
                 <div class="row bg-primary my-2 p-3">
                     <h5>Get Directions</h5>
-                    <select id="startDropdown"></select>
+                    <select id="startDropdown">
+                        <option value="" disabled selected>Choose Start Location</option>
+                    </select>
                     <br>
-                    <select id="endDropdown"></select>
+                    <select id="endDropdown">
+                        <option value="" disabled selected>Choose End Location</option>
+                    </select>
                     <br>
                     <select id="travelMethod">
                         <option value="DRIVING">Driving</option>
@@ -124,6 +128,7 @@
             });
 
             document.getElementById("addLocButton").addEventListener("click", addLocation);
+            document.getElementById("getDirections").addEventListener("click", getDirections);
 
             function initMap()
             {
@@ -136,7 +141,7 @@
                 geocoder = new google.maps.Geocoder();
 
                 popualteMarkers();    
-    
+            
             }
 
             function popualteMarkers()
@@ -171,7 +176,10 @@
                         
                         marker.addListener('click', marker_clicked);
                         markerArray.push(marker);
+
+                        populateDropdowns(name, address);
                     });
+                   
                 }
 
                 let infoWindow = new google.maps.InfoWindow();
@@ -190,6 +198,9 @@
                     infoWindow.setContent(contentString);
                     infoWindow.open(map, this);
                 };
+
+                
+                
             }
            
             function locateUser(position)
@@ -300,6 +311,7 @@
 
             function filterGlanbrook()
             {
+                console.log(markerArray.length);
                 for (i = 0; i < markerArray.length; i++)
                 {
                     if (markerArray[i].COMMUNITY != "Glanbrook")
@@ -373,6 +385,53 @@
                     infoWindow.open(map, this);
                 };
                 
+            }
+
+            function populateDropdowns(name, address)
+            {
+                let startDropdown = document.getElementById("startDropdown");
+                let endDropdown = document.getElementById("endDropdown");
+                let sOption = document.createElement("option");
+                let eOption = document.createElement("option");
+                sOption.textContent = name;
+                sOption.value = address
+                eOption.textContent = name;
+                eOption.value = address;
+                startDropdown.appendChild(sOption);
+                endDropdown.appendChild(eOption);
+                
+            }
+
+            function getDirections()
+            {
+                            // services used to provide directions
+                directionsService = new google.maps.DirectionsService();
+                directionsRenderer = new google.maps.DirectionsRenderer();
+                
+                // have the directions renderer work with this map
+                directionsRenderer.setMap(map);
+                
+                // setup a basic directions request with origin, destination, travel mode,
+                // there are MANY more possible options here
+                let start = document.getElementById("startDropdown").value;
+                let end = document.getElementById("endDropdown").value;
+                let travelMethod = document.getElementById("travelMethod").value;
+                request = {
+                    origin: start,
+                    destination: end,
+                    travelMode: travelMethod
+                };
+
+                // use the directions service and directions renderer to render the 
+                // directions on the map
+                directionsService.route(request, function(result, status) {
+                    if (status == 'OK') {
+                    directionsRenderer.setDirections(result);
+                    console.log(result);
+                    }
+                });
+
+    
             }
 
         </script>
