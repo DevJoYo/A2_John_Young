@@ -7,14 +7,15 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <style>
-           .main
+           #map
               {
                 height: 60vh;
+                
               }
         </style>
     </head>
 
-    <body class="bg-info container-fluiid">
+    <body class="bg-info container-fluid">
         <script async
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgi-EhtvBxoBDtLFyiMKWf_phLoCp457M&loading=async&callback=initMap&libraries=marker">
         </script>
@@ -47,13 +48,13 @@
             </div>
         </div>
 
-        <div class="row m-3 h-80 main">
-            <div id="map" class="border border-primary col-8 container-fluiid">
+        <div class="row container-fluid mt-3 m-auto">
+            <div id="map" class="border border-light border-3 col-lg-8 mb-2 ">
 
             </div>
-            <div class="col-4">
-                <div class ="row bg-primary border border-primary border-3">
-                    <h5 class="text-center">Add Location</h5>
+            <div class="col-lg-4 mb-2 bg-primary border border-light border-3 text-light mx-auto">
+                <div class ="row">
+                    <h5 class="text-center ">Add Location</h5>
                     <form>
                         <label for="bName">Buisness Name:</label>
                         <input type="text" id="bName" name="bName" required>
@@ -84,7 +85,7 @@
                     </form>
                 </div>
 
-                <div class="row bg-primary my-2 p-3">
+                <div class="row my-2">
                     <h5>Get Directions</h5>
                     <select id="startDropdown">
                         <option value="" disabled selected>Choose Start Location</option>
@@ -103,15 +104,13 @@
                     <br>
                     <button type="button" id="getDirections">Get Directions</button>
                 </div>
-                <div class="row">
+                <div class="row my-2">
                     <h5 id="directionsTitle"> </h5>
                     <p id="directions"> </p>
                 </div>
             </div>
         </div>
-        <!--<p>Click the button below to find a kennel near you.</p>
-        <button id="findKennel">Find Kennel</button>
-        <div id="kennel"></div> -->
+   
         <script>
             let map, geocoder;
            
