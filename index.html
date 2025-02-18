@@ -1,526 +1,503 @@
+<!--    
+    StAuth10244: I John Young, 000371952, certify that this material is my original work.
+                    No other person's work has been used without due acknowledgement. I have not made 
+                    my work available to anyone else.
+-->
+
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>A2 - Kennel Finder</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-        <style>
-           #map
-              {
-                height: 60vh;
-                
-              }
-        </style>
-    </head>
 
-    <body class="bg-info container-fluid">
-        <script async
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgi-EhtvBxoBDtLFyiMKWf_phLoCp457M&loading=async&callback=initMap&libraries=marker">
-        </script>
+<head>
+    <title>A2 - PetShop & Kennel Locater</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!--bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous">
+    </script>
+    <!--using the stores.js for location data-->
+    <script src="scripts/stores.js"></script> 
+    <style>
+        #map {
+            height: 60vh;
+        }
+    </style>
+</head>
 
-        <script src="scripts/stores.js"></script>
+<body class="bg-info container-fluid">
+    <!--google maps api key-->
+    <script async
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgi-EhtvBxoBDtLFyiMKWf_phLoCp457M&loading=async&callback=initMap&libraries=marker">
+    </script>
 
-        <h1 class="text-center fst-italic mx-5 mt-1 p-3 bg-primary border border-light border-5 text-light">Hamilton Pet Shop / Kennel Locator</h1>
+    
 
-        <div class="mx-5 text-center row border border-light border-3">
-                <button class="btn btn-primary rounded-0 fs-5" type="button" data-bs-toggle="collapse" data-bs-target="#menuCat" aria-expanded="false" aria-controls="menuCat">
-                    Sort by Category
-                </button>
-                  <div class="collapse py-2" id="menuCat">
-                    <button id="allCatButton" class="btn btn-primary btn-lg">All</button>
-                    <button id="kennelButton" class="btn btn-primary btn-lg">Kennels</button>
-                    <button id="petShopButton" class="btn btn-primary btn-lg">Pet Shops</button>
-                  </div>
-                
-            <button class="btn btn-primary rounded-0 fs-5" type="button" data-bs-toggle="collapse" data-bs-target="#menuCom" aria-expanded="false" aria-controls="menuCom">
-                Sort by Community
-              </button>
-              <div class="collapse py-2" id="menuCom">
-                    <button id="allLocButton" class="btn btn-primary btn-lg">All</button>
-                    <button id="hamButton" class="btn btn-primary btn-lg">Hamilton</button>
-                    <button id="flamButton" class="btn btn-primary btn-lg">Flamborough</button>
-                    <button id="ancButton" class="btn btn-primary btn-lg">Ancaster</button>
-                    <button id="scButton" class="btn btn-primary btn-lg">Stoney Creek</button>
-                    <button id="glanButton" class="btn btn-primary btn-lg">Glanbrook</button>
-              </div>
-            </div>
+    <h1 class="text-center fst-italic mx-5 mt-1 p-3 bg-primary border border-light border-5 text-light">
+        Hamilton PetShop / Kennel Locator
+    </h1>
+
+    <div class="mx-5 text-center row border border-light border-3">
+        <button class="btn btn-primary rounded-0 fs-5" type="button" data-bs-toggle="collapse" data-bs-target="#menuCat" aria-expanded="false" aria-controls="menuCat">
+            Sort by Category
+        </button>
+        <div class="collapse py-2" id="menuCat">
+            <button id="allCatButton" class="btn btn-primary btn-lg">All</button>
+            <button id="kennelButton" class="btn btn-primary btn-lg">Kennels</button>
+            <button id="petShopButton" class="btn btn-primary btn-lg">Pet Shops</button>
         </div>
 
-        <div class="row container-fluid mt-3 m-auto">
-            <div id="map" class="border border-light border-3 col-lg-8 mb-2 ">
+        <button class="btn btn-primary rounded-0 fs-5" type="button" data-bs-toggle="collapse" data-bs-target="#menuCom" aria-expanded="false" aria-controls="menuCom">
+            Sort by Community
+        </button>
 
-            </div>
-            <div class="col-lg-4 mb-2 bg-primary border border-light border-3 text-light mx-auto">
-                <div class ="row">
-                    <h4 class="text-center text-decoration-underline">Add Location</h4>
-                    <form>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text rounded-0" id="bNameLabel">Buisness Name:</span>
-                            </div>
-                            <input type="text" class="form-control" id="bName" placeholder="" aria-label="" aria-describedby="bNameLabel" required>
-                        </div>
-                        
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text rounded-0" id="bAddressLabel">Address:</span>
-                            </div>
-                            <input type="text" class="form-control" id="bAddress" placeholder="" aria-label="" aria-describedby="bNameLabel" required>
-                        </div>
-                        
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                              <label class="input-group-text rounded-0" for="bCategory">Category</label>
-                            </div>
-                            <select class="custom-select" id="bCategory">
-                                <option value="Kennel">Kennel</option>
-                                <option value="PetShop">Pet Shop</option>
-                            </select>
-                        </div>
+        <div class="collapse py-2" id="menuCom">
+            <button id="allLocButton" class="btn btn-primary btn-lg">All</button>
+            <button id="hamButton" class="btn btn-primary btn-lg">Hamilton</button>
+            <button id="flamButton" class="btn btn-primary btn-lg">Flamborough</button>
+            <button id="ancButton" class="btn btn-primary btn-lg">Ancaster</button>
+            <button id="scButton" class="btn btn-primary btn-lg">Stoney Creek</button>
+            <button id="glanButton" class="btn btn-primary btn-lg">Glanbrook</button>
+        </div>
+    </div>
 
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                              <label class="input-group-text rounded-0" for="bCommunity">Category</label>
-                            </div>
-                            <select class="custom-select" id="bCommunity">
-                                <option value="Hamilton">Hamilton</option>
-                                <option value="Flamborough">Flamborough</option>
-                                <option value="Ancaster">Ancaster</option>
-                                <option value="StoneyCreek">Stoney Creek</option>
-                                <option value="Glanbrook">Glanbrook</option>
-                            </select>
-                        </div>
-                       
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text rounded-0" id="bLicense">License # (optional):</span>
-                            </div>
-                            <input type="text" class="form-control" id="bLicense" placeholder="" aria-label="" aria-describedby="bLicense">
-                        </div>
-                        <div class="text-center m-auto">
-                            <button type="button" id="addLocButton" class="btn btn-light">Add Location</button>
-                            <button type="button" id="findMeButton" class="btn btn-light">Find my Location</button>
-                        </div>
-                        
-                    </form>
-                </div>
+    <div class="row container-fluid mt-3 m-auto">
+        <div id="map" class="border border-light border-3 col-lg-8 mb-2 ">
+                //map will be displayed here
+        </div>
 
-                <div class="row my-2">
-                    <h4 class="text-center text-decoration-underline">Get Directions</h4>
+        <div class="col-lg-4 mb-2 bg-primary border border-light border-3 text-light mx-auto">
+            <div class="row"> //first form row
+                <h4 class="text-center text-decoration-underline">Add Location</h4>
+                <form>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                          <label class="input-group-text rounded-0" for="startDropdown">Start Location</label>
+                            <span class="input-group-text rounded-0" id="bNameLabel">Buisness Name:</span>
                         </div>
-                        <select class="custom-select" id="startDropdown">
-                            <option value="" disabled selected>Choose Start Location</option>
+                        <input type="text" class="form-control" id="bName" placeholder="" aria-label=""
+                            aria-describedby="bNameLabel" required>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text rounded-0" id="bAddressLabel">Address:</span>
+                        </div>
+                        <input type="text" class="form-control" id="bAddress" placeholder="" aria-label=""
+                            aria-describedby="bNameLabel" required>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text rounded-0" for="bCategory">Category</label>
+                        </div>
+                        <select class="custom-select" id="bCategory">
+                            <option value="Kennel">Kennel</option>
+                            <option value="PetShop">Pet Shop</option>
                         </select>
                     </div>
 
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                          <label class="input-group-text rounded-0" for="endDropdown">End Location</label>
+                            <label class="input-group-text rounded-0" for="bCommunity">Category</label>
                         </div>
-                        <select class="custom-select" id="endDropdown">
-                            <option value="" disabled selected>Choose End Location</option>
+                        <select class="custom-select" id="bCommunity">
+                            <option value="Hamilton">Hamilton</option>
+                            <option value="Flamborough">Flamborough</option>
+                            <option value="Ancaster">Ancaster</option>
+                            <option value="StoneyCreek">Stoney Creek</option>
+                            <option value="Glanbrook">Glanbrook</option>
                         </select>
                     </div>
-                    
+
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                          <label class="input-group-text rounded-0" for="travelMethod">Travel Method</label>
+                            <span class="input-group-text rounded-0" id="bLicense">License # (optional):</span>
                         </div>
-                        <select class="custom-select" id="travelMethod">
-                            <option value="DRIVING">Driving</option>
-                            <option value="WALKING">Walking</option>
-                            <option value="BICYCLING">Bicycling</option>
-                            <option value="TRANSIT">Transit</option>
-                        </select>
+
+                        <input type="text" class="form-control" id="bLicense" placeholder="" aria-label="" aria-describedby="bLicense">
                     </div>
+
                     <div class="text-center m-auto">
-                        <button type="button" id="getDirections" class="btn btn-light">Get Directions</button>
+                        <button type="button" id="addLocButton" class="btn btn-light">Add Location</button>
+                        <button type="button" id="findMeButton" class="btn btn-light">Find my Location</button>
                     </div>
+                </form>
+            </div>
+
+            <div class="row my-2">
+                <h4 class="text-center text-decoration-underline">Get Directions</h4>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text rounded-0" for="startDropdown">Start Location</label>
+                    </div>
+
+                    <select class="custom-select" id="startDropdown">
+                        <option value="" disabled selected>Choose Start Location</option>
+                    </select>
                 </div>
-                <div class="row my-2 border border-light border-3 m-2">
-                    <h5 id="directionsTitle"> </h5>
-                    <p id="directions"> </p>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text rounded-0" for="endDropdown">End Location</label>
+                    </div>
+
+                    <select class="custom-select" id="endDropdown">
+                        <option value="" disabled selected>Choose End Location</option>
+                    </select>
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text rounded-0" for="travelMethod">Travel Method</label>
+                    </div>
+
+                    <select class="custom-select" id="travelMethod">
+                        <option value="DRIVING">Driving</option>
+                        <option value="WALKING">Walking</option>
+                        <option value="BICYCLING">Bicycling</option>
+                        <option value="TRANSIT">Transit</option>
+                    </select>
+                </div>
+
+                <div class="text-center m-auto">
+                    <button type="button" id="getDirections" class="btn btn-light">Get Directions</button>
                 </div>
             </div>
+            <div class="row my-2 border border-light border-3 m-2">
+                <h5 id="directionsTitle"> </h5>
+                <p id="directions"> </p>
+            </div>
         </div>
-   
-        <script>
-            let map, geocoder;
-           
-            let markerArray = []; 
+    </div>
 
-            // Event Listeners
-            document.getElementById("kennelButton").addEventListener("click", filterKennel);
-            document.getElementById("petShopButton").addEventListener("click", filterPetShop);
-            document.getElementById("allCatButton").addEventListener("click", showAll);
-            document.getElementById("hamButton").addEventListener("click", filterHamilton);
-            document.getElementById("flamButton").addEventListener("click", filterFlamborough);
-            document.getElementById("ancButton").addEventListener("click", fitlerAncaster);
-            document.getElementById("scButton").addEventListener("click", filterStoneyCreek);
-            document.getElementById("glanButton").addEventListener("click", filterGlanbrook);
-            document.getElementById("allLocButton").addEventListener("click", showAll);
-            document.getElementById("findMeButton").addEventListener("click", 
-            function()
-            {
+    <script> //beggining of javascript
+        // "Global" variables
+        let map, geocoder;
+        let markerArray = [];
+
+        // Event Listeners
+        document.getElementById("kennelButton").addEventListener("click", filterKennel);
+        document.getElementById("petShopButton").addEventListener("click", filterPetShop);
+        document.getElementById("allCatButton").addEventListener("click", showAll);
+        document.getElementById("hamButton").addEventListener("click", filterHamilton);
+        document.getElementById("flamButton").addEventListener("click", filterFlamborough);
+        document.getElementById("ancButton").addEventListener("click", fitlerAncaster);
+        document.getElementById("scButton").addEventListener("click", filterStoneyCreek);
+        document.getElementById("glanButton").addEventListener("click", filterGlanbrook);
+        document.getElementById("allLocButton").addEventListener("click", showAll);
+        document.getElementById("findMeButton").addEventListener("click",
+            function () {
                 navigator.geolocation.getCurrentPosition(locateUser);
             });
+        document.getElementById("addLocButton").addEventListener("click", addLocation);
+        document.getElementById("getDirections").addEventListener("click", getDirections);
 
-            document.getElementById("addLocButton").addEventListener("click", addLocation);
-            document.getElementById("getDirections").addEventListener("click", getDirections);
+        // initialize the map, geocoder, and directions service/renderer, plus call the function to populate the markers
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: 43.2387, lng: -79.8881 },
+                zoom: 10,
+                mapId: '999179c50e1af565'
+            });
 
-            function initMap()
-            {
-                map = new google.maps.Map(document.getElementById('map'), {
-                    center: {lat: 43.2387, lng: -79.8881},
-                    zoom: 10,
-                    mapId: '999179c50e1af565'
-                });
-                
-                geocoder = new google.maps.Geocoder();
-                directionsService = new google.maps.DirectionsService();
-                directionsRenderer = new google.maps.DirectionsRenderer();
-                
-                // have the directions renderer work with this map
-                directionsRenderer.setMap(map);
+            geocoder = new google.maps.Geocoder();
+            directionsService = new google.maps.DirectionsService();
+            directionsRenderer = new google.maps.DirectionsRenderer();
+            directionsRenderer.setMap(map);
 
-                popualteMarkers();    
+            popualteMarkers();
+        }
 
-            
-            }
+        // populate the markers on the map with data from the stores.js file
+        function popualteMarkers() {
+            for (i = 0; i < stores.length; i++) {
+                //get buisness properties from stores.js
+                let address = stores[i].BUSINESS_ADDRESS;
+                let name = stores[i].BUSINESS_NAME;
+                let category = stores[i].CATEGORY;
+                let community = stores[i].COMMUNITY;
+                let license = stores[i].LICENSE_NUMBER;
 
-            function popualteMarkers()
-            {
-                
-
-                for (i = 0; i < stores.length; i++)
-                {
-                    let address = stores[i].BUSINESS_ADDRESS;
-                    let name = stores[i].BUSINESS_NAME;
-                    let category = stores[i].CATEGORY;
-                    let community = stores[i].COMMUNITY;
-                    let license = stores[i].LICENSE_NUMBER; 
-
-                    geocoder.geocode({'address': address}, function(results, status) {
-                        if (status == 'OK') {
-                            var marker = new google.maps.marker.AdvancedMarkerElement({
-                                map: map,
-                                position: results[0].geometry.location,
-                                title: name
-                            });
-                        } else {
-                            alert('Geocode was not successful for ' + address + ', for the following reason: ' + status);
-                        }
-                        marker.NAME = name;
-                        marker.ADDRESS = address;
-                        marker.CATEGORY = category;
-                        marker.COMMUNITY = community;
-                        marker.LICENSE = license;  
-                        marker.LAT = results[0].geometry.location.lat();
-                        marker.LNG = results[0].geometry.location.lng();
-                        
-                        marker.addListener('click', marker_clicked);
-                        markerArray.push(marker);
-
-                        populateDropdowns(name, address);
-                    });
-                   
-                }
-
-                let infoWindow = new google.maps.InfoWindow();
-
-                let marker_clicked = function() 
-                {
-                    let contentString = 
-                            "<h5>" + this.NAME + "</h5>" +
-                            "<p>Category: " + this.CATEGORY + "</p>" +
-                            "<br>" +
-                            "<p>Address: " + this.ADDRESS + "</p>" +
-                            "<p>License Number: " + this.LICENSE + "</p>";
-                                
-
-                    infoWindow.close(); // Close previously opened infowindow
-                    infoWindow.setContent(contentString);
-                    infoWindow.open(map, this);
-                };
-
-                
-                
-            }
-           
-            function locateUser(position)
-            {
-                const icon_content = document.createElement("img");
-                icon_content.src = "https://maps.google.com/mapfiles/kml/paddle/grn-stars.png";
-
-                // create a marker centered at the user's location
-                let user_location = new google.maps.marker.AdvancedMarkerElement({
-                    map: map,
-                    position: { lat: position.coords.latitude, 
-                                lng: position.coords.longitude
-                            },
-                    title: "Your Location",  // will appear when we hover over the marker
-                    content: icon_content
-                });
-
-                let latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                let locAddress;
-                geocoder.geocode({'location': latlng}, function(results, status) {
+                //use the geocoder to find the lat and lng of the address
+                geocoder.geocode({ 'address': address }, function (results, status) {
                     if (status == 'OK') {
-                        locAddress = results[0].formatted_address;
-                        console.log(locAddress);
-                        populateDropdowns("Your Location", locAddress);
+                        var marker = new google.maps.marker.AdvancedMarkerElement({
+                            map: map,
+                            position: results[0].geometry.location,
+                            title: name
+                        });
                     } else {
-                        alert('Geocode was not successful for ' + latlng + ', for the following reason: ' + status);
+                        alert('Geocode was not successful for ' + address + ', for the following reason: ' + status);
                     }
+
+                    //save the properties of the buisness to the marker
+                    marker.NAME = name;
+                    marker.ADDRESS = address;
+                    marker.CATEGORY = category;
+                    marker.COMMUNITY = community;
+                    marker.LICENSE = license;
+                    marker.LAT = results[0].geometry.location.lat();
+                    marker.LNG = results[0].geometry.location.lng();
+
+                    marker.addListener('click', marker_clicked);
+                    markerArray.push(marker);
+
+                    //populate the dropdowns with the name and address of the buisness
+                    populateDropdowns(name, address);
                 });
-                
-                
+
             }
 
-            function filterKennel()
-            {
-                for (i = 0; i < markerArray.length; i++)
-                {
-                    if (markerArray[i].CATEGORY != "Kennel")
-                    {
-                        markerArray[i].position = null;
-                    }
-                    else
-                    {
-                        markerArray[i].position = {lat: markerArray[i].LAT, lng: markerArray[i].LNG};
-                    }
+            //infoWindow functionality for the markers
+            let infoWindow = new google.maps.InfoWindow();
+
+            let marker_clicked = function () {
+                let contentString =
+                    "<h5>" + this.NAME + "</h5>" +
+                    "<p>Category: " + this.CATEGORY + "</p>" +
+                    "<br>" +
+                    "<p>Address: " + this.ADDRESS + "</p>" +
+                    "<p>License Number: " + this.LICENSE + "</p>";
+
+
+                infoWindow.close(); // Close previously opened infowindow
+                infoWindow.setContent(contentString);
+                infoWindow.open(map, this);
+            };
+        }
+
+        //function to locate the user and add a marker to the map
+        function locateUser(position) {
+            const icon_content = document.createElement("img");
+            icon_content.src = "https://maps.google.com/mapfiles/kml/paddle/grn-stars.png";
+
+            // create a marker at the user's location
+            let user_location = new google.maps.marker.AdvancedMarkerElement({
+                map: map,
+                position: {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                },
+                title: "Your Location", // title of the marker
+                content: icon_content
+            });
+
+            //use the geocoder to find the address of the user's location based on lat and lng
+            let latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            let locAddress;
+            geocoder.geocode({ 'location': latlng }, function (results, status) {
+                if (status == 'OK') {
+                    locAddress = results[0].formatted_address;
+                    populateDropdowns("Your Location", locAddress);
+                } else {
+                    alert('Geocode was not successful for ' + latlng + ', for the following reason: ' + status);
+                }
+            });
+        }
+
+        //filter functions for the buttons
+        function filterKennel() {
+            for (i = 0; i < markerArray.length; i++) {
+                if (markerArray[i].CATEGORY != "Kennel") {
+                    markerArray[i].position = null;
+                }
+                else {
+                    markerArray[i].position = { lat: markerArray[i].LAT, lng: markerArray[i].LNG };
                 }
             }
+        }
 
-            function filterPetShop()
-            {
-                for (i = 0; i < markerArray.length; i++)
-                {
-                    if (markerArray[i].CATEGORY != "PetShop")
-                    {
-                        markerArray[i].position = null;
-                    }
-                    else
-                    {
-                        markerArray[i].position = {lat: markerArray[i].LAT, lng: markerArray[i].LNG};
-                    }
+        function filterPetShop() {
+            for (i = 0; i < markerArray.length; i++) {
+                if (markerArray[i].CATEGORY != "PetShop") {
+                    markerArray[i].position = null;
+                }
+                else {
+                    markerArray[i].position = { lat: markerArray[i].LAT, lng: markerArray[i].LNG };
                 }
             }
+        }
 
-            function filterHamilton()
-            {
-                for (i = 0; i < markerArray.length; i++)
-                {
-                    if (markerArray[i].COMMUNITY != "Hamilton")
-                    {
-                        markerArray[i].position = null;
-                    }
-                    else
-                    {
-                        markerArray[i].position = {lat: markerArray[i].LAT, lng: markerArray[i].LNG};
-                    }
+        function filterHamilton() {
+            for (i = 0; i < markerArray.length; i++) {
+                if (markerArray[i].COMMUNITY != "Hamilton") {
+                    markerArray[i].position = null;
+                }
+                else {
+                    markerArray[i].position = { lat: markerArray[i].LAT, lng: markerArray[i].LNG };
                 }
             }
+        }
 
-            function filterFlamborough()
-            {
-                for (i = 0; i < markerArray.length; i++)
-                {
-                    if (markerArray[i].COMMUNITY != "Flamborough")
-                    {
-                        markerArray[i].position = null;
-                    }
-                    else
-                    {
-                        markerArray[i].position = {lat: markerArray[i].LAT, lng: markerArray[i].LNG};
-                    }
+        function filterFlamborough() {
+            for (i = 0; i < markerArray.length; i++) {
+                if (markerArray[i].COMMUNITY != "Flamborough") {
+                    markerArray[i].position = null;
+                }
+                else {
+                    markerArray[i].position = { lat: markerArray[i].LAT, lng: markerArray[i].LNG };
                 }
             }
+        }
 
-            function fitlerAncaster()
-            {
-                for (i = 0; i < markerArray.length; i++)
-                {
-                    if (markerArray[i].COMMUNITY != "Ancaster")
-                    {
-                        markerArray[i].position = null;
-                    }
-                    else
-                    {
-                        markerArray[i].position = {lat: markerArray[i].LAT, lng: markerArray[i].LNG};
-                    }
+        function fitlerAncaster() {
+            for (i = 0; i < markerArray.length; i++) {
+                if (markerArray[i].COMMUNITY != "Ancaster") {
+                    markerArray[i].position = null;
+                }
+                else {
+                    markerArray[i].position = { lat: markerArray[i].LAT, lng: markerArray[i].LNG };
                 }
             }
+        }
 
-            function filterStoneyCreek()
-            {
-                for (i = 0; i < markerArray.length; i++)
-                {
-                    if (markerArray[i].COMMUNITY != "StoneyCreek")
-                    {
-                        markerArray[i].position = null;
-                    }
-                    else
-                    {
-                        markerArray[i].position = {lat: markerArray[i].LAT, lng: markerArray[i].LNG};
-                    }
+        function filterStoneyCreek() {
+            for (i = 0; i < markerArray.length; i++) {
+                if (markerArray[i].COMMUNITY != "StoneyCreek") {
+                    markerArray[i].position = null;
+                }
+                else {
+                    markerArray[i].position = { lat: markerArray[i].LAT, lng: markerArray[i].LNG };
                 }
             }
+        }
 
-            function filterGlanbrook()
-            {
-                console.log(markerArray.length);
-                for (i = 0; i < markerArray.length; i++)
-                {
-                    if (markerArray[i].COMMUNITY != "Glanbrook")
-                    {
-                        markerArray[i].position = null;
-                    }
-                    else
-                    {
-                        markerArray[i].position = {lat: markerArray[i].LAT, lng: markerArray[i].LNG};
-                    }
+        function filterGlanbrook() {
+            for (i = 0; i < markerArray.length; i++) {
+                if (markerArray[i].COMMUNITY != "Glanbrook") {
+                    markerArray[i].position = null;
+                }
+                else {
+                    markerArray[i].position = { lat: markerArray[i].LAT, lng: markerArray[i].LNG };
                 }
             }
+        }
 
-            function showAll()
-            {
-                for (i = 0; i < markerArray.length; i++)
-                {
-                    markerArray[i].position = {lat: markerArray[i].LAT, lng: markerArray[i].LNG};
-                }
+        function showAll() {
+            for (i = 0; i < markerArray.length; i++) {
+                markerArray[i].position = { lat: markerArray[i].LAT, lng: markerArray[i].LNG };
             }
+        }
 
-            function addLocation()
-            {
-                let bName = document.getElementById("bName").value;
-                let bAddress = document.getElementById("bAddress").value;
-                let bCategory = document.getElementById("bCategory").value;
-                let bCommunity = document.getElementById("bCommunity").value;
-                console.log(document.getElementById("bLicense").value);
-                let bLicense = document.getElementById("bLicense").value;
+        //function to add a location to the map based on form inputs
+        function addLocation() {
+            let bName = document.getElementById("bName").value;
+            let bAddress = document.getElementById("bAddress").value;
+            let bCategory = document.getElementById("bCategory").value;
+            let bCommunity = document.getElementById("bCommunity").value;
+            let bLicense = document.getElementById("bLicense").value;
 
-                const user_icon_content = document.createElement("img");
-                user_icon_content.src = "https://maps.google.com/mapfiles/kml/paddle/purple-diamond.png";
+            const user_icon_content = document.createElement("img");
+            user_icon_content.src = "https://maps.google.com/mapfiles/kml/paddle/purple-diamond.png";
 
-                geocoder.geocode({'address': bAddress}, function(results, status) {
-                        if (status == 'OK') {
-                            var marker = new google.maps.marker.AdvancedMarkerElement({
-                                map: map,
-                                position: results[0].geometry.location,
-                                title: bName,
-                                content: user_icon_content
-                            });
-                        } else {
-                            alert('Geocode was not successful for ' + address + ', for the following reason: ' + status);
-                        }
-                        marker.NAME = bName;
-                        marker.ADDRESS = bAddress;
-                        marker.CATEGORY = bCategory;
-                        marker.COMMUNITY = bCommunity;
-                        marker.LICENSE = bLicense;  
-                        marker.LAT = results[0].geometry.location.lat();
-                        marker.LNG = results[0].geometry.location.lng();
-                        
-                        marker.addListener('click', marker_clicked);
-                        markerArray.push(marker);
-                        populateDropdowns(bName, bAddress);
+            geocoder.geocode({ 'address': bAddress }, function (results, status) {
+                if (status == 'OK') {
+                    var marker = new google.maps.marker.AdvancedMarkerElement({
+                        map: map,
+                        position: results[0].geometry.location,
+                        title: bName,
+                        content: user_icon_content
                     });
-                    
-                    let infoWindow = new google.maps.InfoWindow();
+                } else {
+                    alert('Geocode was not successful for ' + address + ', for the following reason: ' + status);
+                }
+                marker.NAME = bName;
+                marker.ADDRESS = bAddress;
+                marker.CATEGORY = bCategory;
+                marker.COMMUNITY = bCommunity;
+                marker.LICENSE = bLicense;
+                marker.LAT = results[0].geometry.location.lat();
+                marker.LNG = results[0].geometry.location.lng();
 
-                let marker_clicked = function() 
-                {
-                    let contentString = 
-                            "<h5>" + this.NAME + "</h5>" +
-                            "<p>Category: " + this.CATEGORY + "</p>" +
-                            "<br>" +
-                            "<p>Address: " + this.ADDRESS + "</p>" +
-                            "<p>License Number: " + this.LICENSE + "</p>";
-                                
+                marker.addListener('click', marker_clicked);
+                markerArray.push(marker);
+                populateDropdowns(bName, bAddress);
+            });
 
-                    infoWindow.close(); // Close previously opened infowindow
-                    infoWindow.setContent(contentString);
-                    infoWindow.open(map, this);
+            //infoWindow functionality for the markers added by user
+            let infoWindow = new google.maps.InfoWindow();
+
+            let marker_clicked = function () {
+                let contentString =
+                    "<h5>" + this.NAME + "</h5>" +
+                    "<p>Category: " + this.CATEGORY + "</p>" +
+                    "<br>" +
+                    "<p>Address: " + this.ADDRESS + "</p>" +
+                    "<p>License Number: " + this.LICENSE + "</p>";
+
+
+                infoWindow.close(); // Close previously opened infowindow
+                infoWindow.setContent(contentString);
+                infoWindow.open(map, this);
+            };
+
+        }
+
+        //function to populate the dropdowns with the name and address of the buisness
+        function populateDropdowns(name, address) {
+            let startDropdown = document.getElementById("startDropdown");
+            let endDropdown = document.getElementById("endDropdown");
+            let sOption = document.createElement("option");
+            let eOption = document.createElement("option");
+            sOption.textContent = name;
+            sOption.value = address;
+            eOption.textContent = name;
+            eOption.value = address;
+            startDropdown.appendChild(sOption);
+            endDropdown.appendChild(eOption);
+        }
+
+        //function to get directions from the start and end locations provided by dropdowns
+        function getDirections() {
+            directionsRenderer.setMap(null);
+            let start = document.getElementById("startDropdown").value;
+            let end = document.getElementById("endDropdown").value;
+            let travelMethod = document.getElementById("travelMethod").value;
+
+            if (start != end && start != "" && end != "") {
+                request = {
+                    origin: start,
+                    destination: end,
+                    travelMode: travelMethod
                 };
-                
-            }
 
-            function populateDropdowns(name, address)
-            {
-                let startDropdown = document.getElementById("startDropdown");
-                let endDropdown = document.getElementById("endDropdown");
-                let sOption = document.createElement("option");
-                let eOption = document.createElement("option");
-                sOption.textContent = name;
-                sOption.value = address;
-                eOption.textContent = name;
-                eOption.value = address;
-                startDropdown.appendChild(sOption);
-                endDropdown.appendChild(eOption);
-                
-            }
-
-            function getDirections()
-            {
-                            // services used to provide directions
-                
-                directionsRenderer.setMap(null);
-                
-                // setup a basic directions request with origin, destination, travel mode,
-                // there are MANY more possible options here
-                let start = document.getElementById("startDropdown").value;
-                let end = document.getElementById("endDropdown").value;
-                let travelMethod = document.getElementById("travelMethod").value;
-                if(start != end)
-                {
-                    request = {
-                        origin: start,
-                        destination: end,
-                        travelMode: travelMethod
-                    };
-
-                    // use the directions service and directions renderer to render the 
-                    // directions on the map
-                    directionsService.route(request, function(result, status) {
-                        if (status == 'OK') {
+                directionsService.route(request, function (result, status) {
+                    if (status == 'OK') {
                         directionsRenderer.setDirections(result);
                         directionsRenderer.setMap(map);
                         displayDirections(result)
-                        console.log(result);
-                        }
-                    });
-
-                }
-                else
-                {
-                    alert("Start and End locations cannot be the same.");
-                }
-            }
-
-            function displayDirections(response)
-            {
-                let directionsTit = document.getElementById("directionsTitle");
-                let directionsText = document.getElementById("directions");
-                let instructions = "";
-
-                directionsTit.textContent = "Directions from " +  response.routes[0].legs[0].start_address + "to " + response.routes[0].legs[0].end_address;
-                let legs = response.routes[0].legs;
-                legs.forEach(leg => {
-                    // Loop through each step of the route
-                    leg.steps.forEach(step => {
-                    instructions += `<p> · ${step.instructions}</p>`;
-                    });
+                    }
                 });
-
-                directionsText.innerHTML = instructions;
             }
+            else if (start == end && start != "" && end != "") {
+                alert("Start and End locations cannot be the same.");
+            }
+            else
+            {
+                alert("Please select a start and end location.");
+            }
+        }
 
-        </script>
-    </body>
+        //function to display the directions in the directions div
+        function displayDirections(response) {
+            let directionsTit = document.getElementById("directionsTitle");
+            let directionsText = document.getElementById("directions");
+            let instructions = "";
+            directionsTit.textContent = "Directions from " + response.routes[0].legs[0].start_address + "to " + response.routes[0].legs[0].end_address;
+
+            let legs = response.routes[0].legs;
+            legs.forEach(leg => {
+                leg.steps.forEach(step => {
+                    instructions += `<p> · ${step.instructions}</p>`;
+                });
+            });
+
+            directionsText.innerHTML = instructions;
+        }
+
+    </script>
+</body>
 </html>
