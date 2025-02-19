@@ -205,12 +205,12 @@
             directionsService = new google.maps.DirectionsService();
             directionsRenderer = new google.maps.DirectionsRenderer();
             directionsRenderer.setMap(map);
-
-            popualteMarkers();
+            
+            populateMarkers();
         }
 
         // populate the markers on the map with data from the stores.js file
-        function popualteMarkers() {
+        function populateMarkers() {
             for (i = 0; i < stores.length; i++) {
                 //get buisness properties from stores.js
                 let address = stores[i].BUSINESS_ADDRESS;
